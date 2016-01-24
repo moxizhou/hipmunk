@@ -1,4 +1,9 @@
 var ttt;
+var CLASSES = {
+	board: '.board',
+	overlay: '.overlay'
+}
+var FADE_TIME = 500;
 
 function playerClick() {
 	var index = $(this).attr('value');
@@ -32,10 +37,10 @@ function start(event) {
 	//instantiate class
 	ttt = new TicTacToe();
 	UIManager.toggleBoard();
-	$('td').removeClass().on('click', playerClick);
+	$('td').removeClass();
 	if (event.data) {
-		var bestMove = ai.move(ttt.board);
-		UIManager.setMove($('td[value=' + bestMove + ']'));
+		//always start AI at index 0 if they start first because minimax calculates to index 0
+		UIManager.setMove($('td[value=0]'));
 	}
 }
 
@@ -45,25 +50,27 @@ var UIManager = {
 		box.addClass('fa fa-4x ' + icon);
 	},
 	toggleEndGame: function(endText) {
-		$('.board').fadeTo(500, 0.3);
-    	$('.overlay').css('display', 'block').addClass('replay');
-		//display win/lose/tie results in center and allow click of retry
-		$('.end').text(endText);
-		$('.fa-repeat').on('click', this.initialize)
-			.parent().css('display', 'flex');
+		$(CLASSES.board).fadeTo(FADE_TIME, 0.3);
+    	$(CLASSES.overlay).css('display', 'block').addClass('replay');
+		$('#end').text(endText);
 	},
 	initialize: function() {
-		$('.board').css('display', 'none');
-		$('.initial').css('display', 'block');
-		$('.player-start').on('click', start);
-		$('.ai-start').on('click', true, start);
-		$('.overlay').click(function noop(e) { return e.preventDefault(); });
+		$(CLASSES.board).css('display', 'none');
+		$(CLASSES.overlay).removeClass('replay');
+		
 	},
 	toggleBoard: function() {
-		$('.overlay').css('display', 'none');
-		$('.board').fadeTo(500, 1);
+		$(CLASSES.overlay).css('display', 'none');
+		$(CLASSES.board).fadeTo(FADE_TIME, 1);
 	}
 }
+
+$('.fa-repeat').on('click', UIManager.initialize);
+$('#player-start').on('click', start);
+$('#ai-start').on('click', true, start);
+$('td').on('click', playerClick);
+$(CLASSES.overlay).on('click', function noop(e) { return e.preventDefault(); });
+
 UIManager.initialize();
 
 function TicTacToe() {
