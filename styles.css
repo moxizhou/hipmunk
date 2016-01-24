@@ -1,0 +1,90 @@
+body {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	color: #8D9394;
+}
+
+.status { 
+	font-size: 30px;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.results {
+	display: none;
+}
+.replay > .results {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	text-align: center;
+	align-items: center;
+}
+
+.text-middle {
+	text-align: center;
+}
+
+.board {
+	border-collapse: collapse; 
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.fa-circle-o {
+	color: #D493B5;
+}
+
+.fa-times {
+	color: #79C3CC;
+}
+.fa-times:hover {
+	cursor: default;
+}
+.fa-circle-o:hover {
+	cursor: default;
+}
+.fa-android {
+	color: #D493B5;
+	cursor: pointer;
+}
+
+.fa-user {
+	color: #79C3CC;
+	cursor: pointer;
+}
+
+.fa-repeat:hover {
+	cursor: pointer;
+}
+
+td {
+	height: 150px;
+	width: 150px;
+}
+
+td:hover {
+	cursor: pointer;
+}
+
+tr td:nth-child(2) {
+	border-left: 2px solid #8D9394;
+    border-right: 2px solid #8D9394;
+}
+
+.board tr:nth-child(2) {
+	border-top: 2px solid #8D9394;
+    border-bottom: 2px solid #8D9394;
+}
+
+.container {
+	position: relative;
+	margin-top: 5%;
+}
+.overlay {
+	z-index: 10;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}

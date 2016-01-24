@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"> 
+  </head>
+  <body>
+    <div class="text-middle">
+      <h1>Unbeatable Tic Tac Toe</h1>
+    </div>
+    <div class="overlay">
+      <div class="container">
+        <div class="results">
+          <div class="status end"></div>
+          <i class="fa fa-repeat fa-2x"></i>
+        </div>
+        <div class="text-middle initial">
+          <div class="container ai-start">
+            <i class="fa fa-android fa-3x"></i><div class="status">You Start</div>
+          </div>
+          <div class="container player-start">
+            <i class="fa fa-user fa-3x"></i><div class="status">I Start</div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <table class="board text-middle">
+        <tbody>
+          <tr>
+            <td value="0"></td>
+            <td value="1"></td>
+            <td value="2"></td>
+          </tr>
+          <tr>
+            <td value="3"></td>
+            <td value="4"></td>
+            <td value="5"></td>
+          </tr>
+          <tr>
+            <td value="6"></td>
+            <td value="7"></td>
+            <td value="8"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.js"></script>     
+  <script src="tictactoe.js"></script>
+</html>
