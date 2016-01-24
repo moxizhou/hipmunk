@@ -1,7 +1,7 @@
 var PLAYER_MOVE = 'X';
 var AI_MOVE = 'O';
+var ttt;
 $(function() {
-	var ttt;
 
     function playerClick() {
 		var row = $(this).attr('value');
@@ -12,7 +12,7 @@ $(function() {
     		$(this).addClass('fa fa-times fa-4x');
 
     		//calculate and add ai's move
-    		var bestMove = ttt.aiMove();
+    		var bestMove = ai.move(ttt.board);
     		$('td[value=' + bestMove + ']').addClass('fa fa-circle-o fa-4x');
     		
     		checkWinner();
@@ -63,7 +63,7 @@ $(function() {
     	$('.board').fadeTo(500, 1);
     	$('td').removeClass().on('click', playerClick);
     	if (event.data) {
-			var bestMove = ttt.aiMove();
+			var bestMove = ai.move(ttt.board);
     		$('td[value=' + bestMove + ']').addClass('fa fa-circle-o fa-4x');
     	}
     }
@@ -88,12 +88,6 @@ function move(i, player, board) {
 }
 
 TicTacToe.prototype.move = move;
-
-TicTacToe.prototype.aiMove = function() {
-	var bestMove = this.minimax(this);
-	this.move(bestMove, this.ai);
-	return bestMove;
-}
 
 function isHorizontalVictory(board, player) {
 	return (board[0] == player && board[1] == player && board[2] == player) ||
@@ -148,53 +142,56 @@ function onNextMove(board, player, cb) {
 		if (nextMove) cb(newBoard, i);
 	}
 }
-//minimax recursive decision tree, always assume opponent is the highest level
-TicTacToe.prototype.minimax = function() {
-	var ARBITRARY_LOW_NUMBER = -10000;
-	var topScore = ARBITRARY_LOW_NUMBER;
-	var move = 0;
-	var self = this;
-	
-	onNextMove(self.board, self.ai, function(newBoard, _move) {
-		var currentScore = self.minValue(newBoard);
-		if (currentScore > topScore) {
-			topScore = currentScore;
-			move = _move;
+var ai = {
+	move: function(board) {
+		var bestMove = this.minimax(board);
+		ttt.move(bestMove, AI_MOVE);
+		return bestMove;
+	},
+	//minimax recursive decision tree, always assume opponent is the highest level
+	minimax: function minimax(board) {
+		var topScore = this.ARBITRARY_LOW_NUMBER;
+		var move = 0;
+		
+		onNextMove(board, AI_MOVE, function(newBoard, _move) {
+			var currentScore = ai.minValue(newBoard);
+			if (currentScore > topScore) {
+				topScore = currentScore;
+				move = _move;
+			}
+		});
+		return move;
+	},
+	//ideal opponent, always minimize ai score
+	minValue: function(board) {
+		var winner = ttt.getScore(board);
+		if (winner !== false) {
+			return winner;
 		}
-	});
-	return move;
-}
-
-//ideal opponent, always minimize ai score
-TicTacToe.prototype.minValue = function(board) {
-	var winner = this.getScore(board);
-	if (winner !== false) {
-		return winner;
-	}
-	var topScore = 10000;
-	var self = this;
-	onNextMove(board, self.player, function(newBoard) {
-		var currentScore = self.maxValue(newBoard);
-		if (currentScore < topScore) {
-			topScore = currentScore;
+		var topScore = this.ARBITRARY_HIGH_NUMBER;
+		onNextMove(board, PLAYER_MOVE, function(newBoard) {
+			var currentScore = ai.maxValue(newBoard);
+			if (currentScore < topScore) {
+				topScore = currentScore;
+			}
+		});
+		return topScore;
+	},
+	//ideal ai, always maximize ai score
+	maxValue: function(board) {
+		var winner = ttt.getScore(board);
+		if (winner !== false) {
+			return winner;
 		}
-	});
-	return topScore;
-}
-
-//ideal ai, always maximize ai score
-TicTacToe.prototype.maxValue = function(board) {
-	var winner = this.getScore(board);
-	if (winner !== false) {
-		return winner;
-	}
-	var topScore = -10000;
-	var self = this;
-	onNextMove(board, self.ai, function(newBoard) {
-		var currentScore = self.minValue(newBoard);
-		if (currentScore > topScore) {
-			topScore = currentScore;
-		}
-	})
-	return topScore;
+		var topScore = this.ARBITRARY_LOW_NUMBER;
+		onNextMove(board, AI_MOVE, function(newBoard) {
+			var currentScore = ai.minValue(newBoard);
+			if (currentScore > topScore) {
+				topScore = currentScore;
+			}
+		})
+		return topScore;
+	},
+	ARBITRARY_LOW_NUMBER: -10000,
+	ARBITRARY_HIGH_NUMBER: 10000
 }
