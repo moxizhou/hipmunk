@@ -39,9 +39,9 @@ $(function() {
 		//instantiate class
 		ttt = new TicTacToe();
 		UIManager.toggleBoard();
-		$('td').removeClass();
+		
+		//always start AI at index 0 if they start first because minimax calculates to index 0
 		if (event.data) {
-			//always start AI at index 0 if they start first because minimax calculates to index 0
 			ttt.move(0, ttt.ai, ttt.board)
 			UIManager.setMove($('td[value=0]'));
 		}
@@ -59,8 +59,8 @@ $(function() {
 		},
 		initialize: function() {
 			$(CLASSES.board).css('display', 'none');
+			$('td').removeClass();
 			$(CLASSES.overlay).removeClass('replay');
-			
 		},
 		toggleBoard: function() {
 			$(CLASSES.overlay).css('display', 'none');
@@ -68,7 +68,7 @@ $(function() {
 		}
 	}
 
-	//click handlers
+	//click event handlers
 	$('.fa-repeat').on('click', UIManager.initialize);
 	$('#player-start').on('click', start);
 	$('#ai-start').on('click', true, start);

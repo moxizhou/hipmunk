@@ -48,7 +48,3 @@ TicTacToe.prototype.getScore = function(board) {
 		return false;
 	}
 };
-
-
-
-
