@@ -56,10 +56,10 @@ var ai = {
 			if (currentScore > topScore) {
 				topScore = currentScore;
 			}
-		})
+		});
 		return topScore;
 	},
 
 	_ARBITRARY_LOW_NUMBER: -10000,
 	_ARBITRARY_HIGH_NUMBER: 10000
-}
+};

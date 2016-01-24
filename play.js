@@ -6,7 +6,7 @@ $(function() {
 	var CLASSES = {
 		board: '.board',
 		overlay: '.overlay'
-	}
+	};
 
 	function playerClick() {
 		var index = $(this).attr('value');
@@ -15,7 +15,7 @@ $(function() {
 		if (ttt.move(index, ttt.player, ttt.board)) {
 			UIManager.setMove($(this), true);
 			var aiMove = ai.move(ttt.board);
-			UIManager.setMove($('td[value=' + aiMove + ']'));		
+			UIManager.setMove($('td[value=' + aiMove + ']'));
 			checkWinner();
 		}
 	}
@@ -42,19 +42,19 @@ $(function() {
 		
 		//always start AI at index 0 if they start first because minimax calculates to index 0
 		if (event.data) {
-			ttt.move(0, ttt.ai, ttt.board)
+			ttt.move(0, ttt.ai, ttt.board);
 			UIManager.setMove($('td[value=0]'));
 		}
 	}
 
 	var UIManager = {
 		setMove: function(box, isPlayer) {
-			var icon = isPlayer ? 'fa-times' : 'fa-circle-o'; 
+			var icon = isPlayer ? 'fa-times' : 'fa-circle-o';
 			box.addClass('fa fa-4x ' + icon);
 		},
 		toggleEndGame: function(endText) {
 			$(CLASSES.board).fadeTo(FADE_TIME, 0.3);
-	    	$(CLASSES.overlay).css('display', 'block').addClass('replay');
+			$(CLASSES.overlay).css('display', 'block').addClass('replay');
 			$('#end').text(endText);
 		},
 		initialize: function() {
@@ -66,7 +66,7 @@ $(function() {
 			$(CLASSES.overlay).css('display', 'none');
 			$(CLASSES.board).fadeTo(FADE_TIME, 1);
 		}
-	}
+	};
 
 	//click event handlers
 	$('.fa-repeat').on('click', UIManager.initialize);
