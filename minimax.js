@@ -17,7 +17,7 @@ var ai = {
 	_minimax: function minimax(board) {
 		var topScore = this._ARBITRARY_LOW_NUMBER;
 		var move = 0;
-		
+
 		this._onNextMove(board, ttt.ai, function(newBoard, _move) {
 			var currentScore = ai._minValue(newBoard);
 			if (currentScore > topScore) {

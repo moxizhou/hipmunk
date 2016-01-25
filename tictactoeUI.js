@@ -1,7 +1,7 @@
 var ttt;
 
 $(function() {
-	
+
 	var FADE_TIME = 500;
 	var CLASSES = {
 		board: '.board',
@@ -10,9 +10,8 @@ $(function() {
 
 	function playerClick() {
 		var index = $(this).attr('value');
-
-		//if player's turn and valid move
-		if (ttt.move(index, ttt.player, ttt.board)) {
+		var isValidMove = ttt.move(index, ttt.player, ttt.board);
+		if (isValidMove) {
 			UIManager.setMove($(this), true);
 			var aiMove = ai.move(ttt.board);
 			UIManager.setMove($('td[value=' + aiMove + ']'));
@@ -35,13 +34,12 @@ $(function() {
 		}
 	}
 
-	function start(event) {
-		//instantiate class
+	function start(aiStart) {
 		ttt = new TicTacToe();
 		UIManager.toggleBoard();
-		
+
 		//always start AI at index 0 if they start first because minimax calculates to index 0
-		if (event.data) {
+		if (aiStart) {
 			ttt.move(0, ttt.ai, ttt.board);
 			UIManager.setMove($('td[value=0]'));
 		}
@@ -70,11 +68,15 @@ $(function() {
 
 	//click event handlers
 	$('.fa-repeat').on('click', UIManager.initialize);
-	$('#player-start').on('click', start);
-	$('#ai-start').on('click', true, start);
+	$('#player-start').on('click', function() {
+		start(false);
+	});
+	$('#ai-start').on('click', function() {
+		start(true);
+	});
 	$('td').on('click', playerClick);
 	$(CLASSES.overlay).on('click', function noop(e) { return e.preventDefault(); });
-	
+
 	UIManager.initialize();
 
 });

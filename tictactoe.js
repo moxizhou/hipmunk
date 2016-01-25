@@ -13,7 +13,7 @@ TicTacToe.prototype.move = function(i, player, board) {
 };
 
 TicTacToe.prototype._hasWinner = function(player, board) {
-	
+
 	function isHorizontalVictory(board, player) {
 		return (board[0] === player && board[1] === player && board[2] === player) ||
 			(board[3] === player && board[4] === player && board[5] === player) ||
@@ -31,12 +31,14 @@ TicTacToe.prototype._hasWinner = function(player, board) {
 
 	return isHorizontalVictory(board, player) || isVerticalVictory(board, player) || isDiagonalVictory(board, player);
 };
-	
+
 TicTacToe.prototype._noMoves = function(board) {
 	return !_.contains(board, undefined);
 };
 
-//All the conditions to win 
+//All the conditions to win.
+//Need to be a negative number, positive number, and neutral number
+//so we can take it and subtract from total to calculate min and max
 TicTacToe.prototype.getScore = function(board) {
 	if (this._hasWinner(this.ai, board)) {
 		return 1;
